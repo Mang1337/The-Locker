@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Locker- Order Form</title>
+    <link rel="stylesheet" href="style.css">
+    <style>
+        .content {
+ 
+            width: 80%;
+      max-width: 1000px;
+      margin: 20px auto;
+      text-align: justify;
+      line-height: 1.6;
+      padding: 20px;
+      background-color: #eeeeee;
+      border-radius: 10px;
+      box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.1);
+}
+    </style>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+</head>
+<body onload="showDate()">
+
+    <header>
+        <nav class="navbar navbar-expand-lg navbar-light bg-light">
+          <div class="container-fluid">
+            <a class="navbar-brand" href="index.html">The Locker</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+              <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+              <ul class="navbar-nav">
+                
+                <li class="nav-item">
+                  <a class="nav-link" href="products.html">Products/Services</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="about.html">About Us</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="contact.html">Contact Us</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="testimonials.html">Reviews</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="orderform.html">OrderForm</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="sitemap.html">Sitemap</a>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </nav>
+      </header>
+    
+     
+
+      <script>
+        function validateAndCalculate() {
+
+          var firstName = document.getElementById("firstName");
+          var lastName = document.getElementById("lastName");
+          var email = document.getElementById("email");
+          var shoeType = document.getElementById("shoeType");
+          var quantity = document.getElementById("quantity");
+          var shipping = document.getElementsByName("shipping");
+          var output = document.getElementById("output");
+          var errors = "";
+          var totalPrice = 0;
+         
+          //Fname
+          if (firstName.value == "") {
+            errors = true;
+            document.getElementById("firstNameRequired");
+          } else {
+            document.getElementById("firstNameRequired");
+          }
+         
+          //Lname
+                 if (lastName.value == "") {
+            errors = true;
+            document.getElementById("lastNameRequired");
+          } else {
+            document.getElementById("lastNameRequired");
+          }
+         
+          //email checker
+          if (email.value.indexOf("@") == -1 || email.value.indexOf(".") == -1) {
+            errors = true;
+            document.getElementById("emailRequired");
+          } else {
+            document.getElementById("emailRequired");
+          }
+         
+          //quantity validation
+        
+          if (quantity.value<1) {
+            errors = true;
+            document.getElementById("quantityRequired");
+          } else {
+            document.getElementById("quantityRequired");
+          }
+         
+          //shipping radio
+          var shippingSelected = false;
+          for (var i = 0; i < shipping.length; i++) {
+            if (shipping[i].checked) {
+              shippingSelected = true;
+              break;
+            }
+          }
+
+          if (!shippingSelected) {
+            errors = true;
+            document.getElementById("shippingRequired");
+          } else {
+            document.getElementById("shippingRequired");
+          }
+         
+          if (!errors) {
+            var shoePrice = parseFloat(shoeType.options[shoeType.selectedIndex].value);
+            var shoeQuantity = parseInt(quantity.value);
+
+            var shippingCost = 0;
+            for (var i = 0; i < shipping.length; i++) {
+              if (shipping[i].checked) {
+                shippingCost = parseFloat(shipping[i].value);
+                break;
+              }
+            }
+              
+            var subtotal = shoePrice * shoeQuantity;
+            // 5% discount if 10 or more shoe
+            var discount = 0;
+            if (shoeQuantity >= 10) {
+              discount = subtotal * 0.05;
+            }
+         
+            totalPrice = subtotal + shippingCost - discount;
+            totalPrice = totalPrice.toFixed(2);
+          }
+         
+          if (errors) {
+            output.value = "";
+          } else {
+            output.value = "Name: " + firstName.value + " " + lastName.value + "\n" +
+                           "Email: " + email.value + "\n" +
+                           "Shoe type: " + shoeType.options[shoeType.selectedIndex].text + "\n" +
+                           "Quantity: " + quantity.value + "\n" +
+                           "Shipping method: " + (shippingCost == 19.54 ? "Aramex standard" : "Aramex express") + "\n" +
+                            "Total price: $" + totalPrice;
+        
+          }
+        }
+        function showDate() {
+
+  var today = new Date();
+  
+  var year = today.getFullYear();
+  var month = today.getMonth() + 1; 
+  var day = today.getDate();
+  var date = day + "-" + month + "-" + year;
+  var dateElement = document.getElementById("date");
+  dateElement.innerHTML = date;
+}
+        </script>
+       
+       
+            <div class="content">
+                <div class="p3">
+                    
+                <p id="date" ></p>
+            
+        </div>
+        <h1>Shoe Order Form</h1>
+        <form>
+          <p>
+            <label for="firstName">First name:</label>
+            <input type="text" id="firstName" name="firstName">
+            <span id="firstNameRequired" style="color: red;">*required</span>
+          </p>
+          <p>
+            <label for="lastName">Last name:</label>
+            <input type="text" id="lastName" name="lastName">
+            <span id="lastNameRequired" style="color: red;">*required</span>
+          </p>
+          <p>
+            <label for="email">Email:</label>
+            <input type="email" id="email" name="email">
+            <span id="emailRequired" style="color: red;">*required</span>
+          </p>
+          <p>
+            <label for="shoeType">Shoe type:</label>
+            <select id="shoeType" name="shoeType">
+              <option value="899.99">Dior obliques ($899.99)</option>
+              <option value="109.99">Nike air force retro ($109.99)</option>
+              <option value="89.99">Nike gunsmoke retro ($89.99)</option>
+            </select>
+          </p>
+          <p>
+            <label for="quantity">Quantity:</label>
+            <input type="number" id="quantity" name="quantity" min="1">
+            <span id="quantityRequired" style="color: red;">*required</span>
+          </p>
+          <p>
+            Shipping method:
+            <input type="radio" id="standard" name="shipping" value="19.54">
+            <label for="standard">Aramex standard ($19.54)</label>
+            <input type="radio" id="express" name="shipping" value="25.71">
+            <label for="express">Aramex express ($25.71)</label>
+            <span id="shippingRequired" style="color: red;">*required</span>
+          </p>
+          <p>
+            <input type="button" value="Submit" onclick="validateAndCalculate()">
+          </p>
+          <p>
+            <textarea id="output" name="output" rows="7" cols="40" readonly></textarea>
+          </p>
+        </form>
+        </div>
+    
+</script>
+      <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
+</body>
+</html>
